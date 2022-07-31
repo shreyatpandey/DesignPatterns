@@ -4,3 +4,8 @@ What is CRTP?
 What is static polymorphism and how does it differ from the dynamic polymorphism?
 What are the downside of virtual function calls, and why it may be preferable to resolve such calls at compile time?
 What are the other uses of CRTP?
+
+What is wrong with a Virtual Function?
+Biggest Disadvantage:-
+Performance overhead
+compared that to inline function
