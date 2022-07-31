@@ -1,0 +1,21 @@
+SFINAE:- Substitution Failure Is Not An Error
+The rule that a substitution failure arising from an expression that would be invalid with the specified or deduced types does not make the whole
+program invalid is known as Substitution Failure Is Not An Error
+//Template Overload
+template<typename T>void f(T* i)
+{
+  std::cout<<"f(T*)"<<std::endl;
+}
+template<typename T>void f(int T::* p)
+{
+ std::cout<<"f(T::*)"<<std::endl;
+}
+struct A
+{
+ int i;
+};
+
+A a;
+f(&a.i);
+f(&A::i);
+
