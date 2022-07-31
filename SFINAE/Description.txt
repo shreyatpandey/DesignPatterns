@@ -1,0 +1,7 @@
+SFINAE - Substitution Failure Is Not An Error
+Not much C++ programmer know about this
+This chapter would cover these in details:-
+What are the function overloading and overload resolution?
+What are type deduction and substition?
+What is SFINAE and why was it necessary in C++?
+How can SFINAE be used to write insanely complex, and sometimes useful, programs?
