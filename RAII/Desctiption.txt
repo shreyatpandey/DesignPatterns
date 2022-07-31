@@ -1,0 +1,52 @@
+RAII stands for Resource Acquisition in Initialization
+Basic-Objective:-
+What is the standard approach for managing resources in C++(RAII)?
+How does RAII solve the problem of resource management?
+
+Dangers of Manual Resource Management:-
+First and obvious danger of managing every resource manually, with explicit calls to acquire and release each one, is that it is easy to forget the latter.
+Example:-
+{
+  object_counter* p = new object_counter;
+  ...many lines of code ...
+} 
+Memory resource has been leaked which is nothing but object_counter
+TEST(Memory, Leak1)
+{
+  object_counter::all_count = object_counter::count = 0,
+  object_counter * p = new object_counter;
+  EXPECT_EQ(1, object_counter::count);
+  EXPECT_EQ(1, object_counter::all_count);
+  //delete p;
+  EXPECT_EQ(0, object_counter::count); //Result into the test fail for this case
+}
+Issue with Real-Program:-
+In real-program, finding the issue of memory leak is very hard. Sanitizers and memory debuggers can help with memory leaks, but they require that the program
+actually executes the buggy code, so they depend on the test coverage.
+
+bool process(...some parameters...)
+{
+  object_counter* p = new object_counter;
+  ... many more lines of code...
+  if(!success)
+  { 
+    return false;  //creates a memory leak as we are returning false from here and not deleting it
+  }
+  ...even more lines of code
+  delete p;
+  return true;
+}
+//Solution
+bool process(...some parameters...)
+{
+ object_counter* p = new object_counter;
+ ...many more lines of code....
+ if(!success)
+ {
+    delete p;
+    return false;
+ }
+ ..even more lines of code...
+ delete p;
+ return true;
+}
