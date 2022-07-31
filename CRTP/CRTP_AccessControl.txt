@@ -1,0 +1,5 @@
+When implementing CRTP classes, you do not have to worry about access - any method you want to call has to be accessible.
+Either the method has to be public,or the caller has to have special access.
+Compared to virtual function:-
+In a virtual function, the caller must have access to the member function that is named in the call.
+For example, a call to the base class function, B::f(), requires that either B::f() is public or the caller has access to non-public member functions
