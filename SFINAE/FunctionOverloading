@@ -1,1 +1,42 @@
 Overload resolution and overload sets
+Example
+void f(int i) { std::cout<<"f(int)"<<std::endl; }
+void f(long i){ std::cout<<"f(long)"<<std::endl; }
+void f(double i){std::cout<<"f(double)"<<std::endl;}
+
+f(5);
+f(51);
+f(5.0);
+Understanding the function overloading call is complex.
+What if something like this is passed:- f(5.0f)
+Now we have to convert the argument from the float type to one of the int,long,or double type.
+Standard has the rules it should come as no surprise that the conversion to double is preferred and that the overload is called
+Lets see what happens with a different integer type, say, unsigned int:
+f(5u)
+Now we have two options: convert unsigned int to signed int , or to signed long.
+While it may be argued that the conversion to long is safer, and thus better, the two conversions are considered so close by the standard that the 
+compiler cannot chose.
+This call does compile because the overload resolution is considered ambiguous; the error message should say as much.
+If you encounter such a problem in your code, you have to help the compiler by casting the arguments to a type that makes the resolution unambiguous.
+the simplest way is to cast the type of the parameter for the overload you want to call:
+unsigned int i = 5u;
+f(static_cast<int>(i));
+So far we have considered only ordinary C++ functions, although everything we have learned applies equally to member functions as well.
+Now, we need to add template funcitons to the mix.
+
+Overload Set:
+Template Functions:-
+When these functions are called, the parameter types are deduced from the types of the arguments at the call site.
+The template functions can have the same name as the non-template functions, and several template functions can have the same name as well, so
+we need to learn about overload resolution in the presence of templates.
+
+
+void f(int i) { std::cout<<"f(int)"<<std::endl;}
+void f(long i) { std::cout<<"f(long)"<<std::endl;}
+template<typename T>void f(T i) {std::cout<<"f(T)"<<std::endl;}
+f(5) ; f(51); f(5.0);
+
+The f function name can refer to any of the three functions,one of which is the template. The best overload will be chosen from these three each time.
+The set of functions that are considered for the overload resolution of a particular function call is known as the overload set.
+The first call to f() matches exactly the first non-template function in the overload set -  the argument type is int, and the first function is f(int).
+
