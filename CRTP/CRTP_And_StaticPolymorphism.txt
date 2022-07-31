@@ -1,0 +1,23 @@
+Compile-time polymorphism
+CRTP can be used to allow the derived class to customize the behavior of the base class.
+template<typename D>class B{
+public:
+ ...
+ void f(int i){ static_case<D*>(this)->f(i);}
+ protected:
+ int i_;
+ };
+ class D:public B<D>{
+ public:
+ void f(int i){ i_ += 1; }
+ };
+ 
+ If the base class B::f() method is called, it dispatches the call to the derived class method for the real derived class, just like virtual function
+ does.
+ Of course, in order to fully take advantage of this polymorphism, we have to be able to call the methods of the base class through the base class pointer.
+ Without this, we are simply calling methods of the derived class whose type we already know:
+ D* d = ..;
+ d->f(5);
+ B<D>* b = ..;
+ b->f(5);
+ 
