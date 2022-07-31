@@ -1,0 +1,6 @@
+The Curiously Recurring Template Pattern
+Following topics would be covered :-
+What is CRTP?
+What is static polymorphism and how does it differ from the dynamic polymorphism?
+What are the downside of virtual function calls, and why it may be preferable to resolve such calls at compile time?
+What are the other uses of CRTP?
